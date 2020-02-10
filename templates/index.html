@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+</head>
+<body>
+<div class="border-bottom shadow-sm" style="height: 75px">
+    <div class="d-flex justify-content-around flex-md-row align-items-center" style="height: 100%">
+        <div>
+            <p class="p-2" style="margin-top: 15px">Home</p>
+        </div>
+        {% if user.is_authenticated %}
+            <div>
+                <a href="histogram/histogram" class="p-2">Histogram</a>
+            </div>
+            <div>
+                <a href="accounts/logout" class="p-2">Log Out</a>
+            </div>
+        {% else %}
+            <div>
+                <a href="accounts/login" class="p-2">Log In</a>
+            </div>
+            <div>
+                <a href="accounts/register" class="p-2">Sign Up</a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="text-center" style="padding: 200px">
+            {% for d in data %}
+                {% if d.id == user.id %}
+                    <h3>Welcome back {{ d.username }}</h3>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center" style="padding: 200px">
+            <h3>Please sign in our log in to see histogram.</h3>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

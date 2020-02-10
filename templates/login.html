@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="border-bottom shadow-sm" style="height: 75px">
+    <div class="d-flex justify-content-around flex-md-row align-items-center" style="height: 100%">
+        <div>
+            <a href=".." class="p-2">Home</a>
+        </div>
+        <div>
+            <p class="p-2" style="margin-top: 15px">Log In</p>
+        </div>
+        <div>
+            <a href="register" class="p-2">Sign Up</a>
+        </div>
+    </div>
+    <form action="login" method="post">
+        {% csrf_token %}
+
+        <div class="container" style="max-width: 50%; padding: 50px">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                </div>
+                <input type="text" class="form-control" name="username">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                </div>
+                <input type="password" class="form-control" name="password">
+            </div>
+
+            <input type="Submit" class="btn btn-primary">
+
+            <div class="text-center text-danger">
+                {% for message in messages %}
+                    <h1> {{ message }} </h1>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

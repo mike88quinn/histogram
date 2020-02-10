@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Histogram</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+</head>
+
+<body>
+<div class="border-bottom shadow-sm" style="height: 75px">
+    <div class="d-flex justify-content-around flex-md-row align-items-center" style="height: 100%">
+        <div>
+            <a href=".." class="p-2">Home</a>
+        </div>
+        <div>
+            <p href="histogram" class="p-2" style="margin-top: 15px">Histogram</p>
+        </div>
+        <div>
+            <a href="../accounts/logout" class="p-2">Log Out</a>
+        </div>
+    </div>
+</div>
+
+<div style="margin: auto; max-width: 50%; max-height: 75%">
+    <canvas id="canvas"></canvas>
+</div>
+
+<br>
+
+<div class="text-center" style="position: relative">
+    {% for d in data %}
+        {% if d.id == user.id %}
+            <h3 class="text-center">Your age is<span style="color: red"> {{ d.age }}</span>.</h3>
+            <div class="hidden" value="{{ d.age }}" id="age">
+
+            </div>
+
+        {% endif %}
+    {% endfor %}
+</div>
+
+<script>
+    var ages = [{{ all_ages|safe }}];
+    ages = ages[0];
+    console.log(ages);
+    var ones = 0;
+    var tens = 0;
+    var twenties = 0;
+    var thirties = 0;
+    var fourties = 0;
+    var fifties = 0;
+    var sixties = 0;
+    var seventies = 0;
+    var eighties = 0;
+    var ninties = 0
+    var above = 0;
+
+
+    var age = document.getElementById("age").getAttribute('value');
+    var index = Math.floor(age / 10);
+
+    for (var i = 0; i < ages.length; i++) {
+        switch (Math.floor(ages[i] / 10)) {
+            case 0:
+                ones++;
+                break;
+            case 1:
+                tens++;
+                break;
+            case 2:
+                twenties++;
+                break;
+            case 3:
+                thirties++;
+                break;
+            case 4:
+                fourties++;
+                break;
+            case 5:
+                fifties++;
+                break;
+            case 6:
+                sixties++;
+                break;
+            case 7:
+                seventies++;
+                break;
+            case 8:
+                eighties++;
+                break;
+            case 9:
+                ninties++;
+                break;
+            default:
+                above++;
+        }
+    }
+    var histogramChartData = {
+        labels: ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99', '100+'],
+        datasets: [{
+            barPercentage: 1.0,
+            categoryPercentage: 1.0,
+            label: 'Ages',
+            backgroundColor: window.chartColors.blue,
+            data: [
+                ones,
+                tens,
+                twenties,
+                thirties,
+                fourties,
+                fifties,
+                sixties,
+                seventies,
+                eighties,
+                ninties,
+                above
+            ]
+        }]
+
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: histogramChartData,
+            options: {
+                title: {
+                    display: true,
+                    text: 'Histogram of ages'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+    };
+
+
+</script>
+
+</body>
+</html>
